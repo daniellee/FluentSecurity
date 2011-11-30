@@ -15,7 +15,7 @@ namespace FluentSecurity.Specification.Helpers
 		public static readonly Func<bool> ValidIsAuthenticatedFunction = () => true;
 		public static readonly Func<IEnumerable<object>> ValidRolesFunction = () => new object[0];
 
-		public static ISecurityContext CreateSecurityContext(bool authenticated, IEnumerable<object> roles = null)
+		public static ISecurityContext CreateSecurityContext(bool authenticated, IEnumerable<object> roles)
 		{
 			var context = new Mock<ISecurityContext>();
 			context.Setup(x => x.CurrenUserAuthenticated()).Returns(authenticated);
@@ -23,7 +23,12 @@ namespace FluentSecurity.Specification.Helpers
 			return context.Object;
 		}
 
-		public static PolicyContainer CreateValidPolicyContainer()
+        public static ISecurityContext CreateSecurityContext(bool authenticated)
+        {
+            return CreateSecurityContext(authenticated, null);
+        }
+
+	    public static PolicyContainer CreateValidPolicyContainer()
 		{
 			return new PolicyContainer(
 				ValidControllerName,
@@ -75,7 +80,7 @@ namespace FluentSecurity.Specification.Helpers
 			return violationHandlers;
 		}
 
-		public static IRequestDescription CreateRequestDescription(string areName = "Area")
+		public static IRequestDescription CreateRequestDescription(string areName)
 		{
 			var mock = new Mock<IRequestDescription>();
 			mock.Setup(x => x.AreName).Returns(areName);
@@ -84,7 +89,12 @@ namespace FluentSecurity.Specification.Helpers
 			return mock.Object;
 		}
 
-		public static Route CreateRoute(string areaName, string controllerName, string actionName)
+        public static IRequestDescription CreateRequestDescription()
+        {
+            return CreateRequestDescription("Area");
+        }
+
+	    public static Route CreateRoute(string areaName, string controllerName, string actionName)
 		{
 			var routeValueDictionary = new RouteValueDictionary
 			{

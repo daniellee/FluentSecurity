@@ -380,7 +380,7 @@ namespace FluentSecurity.Specification
 			var configurationExpression = TestDataFactory.CreateValidConfigurationExpression();
 
 			// Assert
-			Assert.Throws<ArgumentNullException>(() => configurationExpression.ResolveServicesUsing(null));
+			Assert.Throws<ArgumentNullException>(() => configurationExpression.ResolveServicesUsing((ISecurityServiceLocator) null));
 		}
 	}
 
@@ -414,7 +414,7 @@ namespace FluentSecurity.Specification
 		{
 			// Arrange
 			var concreteTypes = new List<ConcreteType1> { new ConcreteType1(), new ConcreteType1(), new ConcreteType1() };
-			FakeIoC.GetAllInstancesProvider = () => concreteTypes;
+			FakeIoC.GetAllInstancesProvider = () => concreteTypes.ConvertAll(x => (object)x);
 			Func<Type, IEnumerable<object>> servicesLocator = FakeIoC.GetAllInstances;
 			var configurationExpression = TestDataFactory.CreateValidConfigurationExpression();
 
@@ -431,7 +431,7 @@ namespace FluentSecurity.Specification
 		{
 			// Arrange
 			var concreteTypes = new List<ConcreteType1> { new ConcreteType1(), new ConcreteType1(), new ConcreteType1() };
-			FakeIoC.GetAllInstancesProvider = () => concreteTypes;
+			FakeIoC.GetAllInstancesProvider = () => concreteTypes.ConvertAll(x => (object)x);
 			Func<Type, IEnumerable<object>> servicesLocator = FakeIoC.GetAllInstances;
 			var configurationExpression = TestDataFactory.CreateValidConfigurationExpression();
 
@@ -514,7 +514,7 @@ namespace FluentSecurity.Specification
 			var configurationExpression = TestDataFactory.CreateValidConfigurationExpression();
 
 			// Act & assert
-			var exception = Assert.Throws<ArgumentNullException>(() => configurationExpression.ResolveServicesUsing(null));
+			var exception = Assert.Throws<ArgumentNullException>(() => configurationExpression.ResolveServicesUsing((ISecurityServiceLocator) null));
 			Assert.That(exception.ParamName, Is.EqualTo("securityServiceLocator"));
 		}
 

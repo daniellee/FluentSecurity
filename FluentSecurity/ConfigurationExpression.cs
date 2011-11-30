@@ -182,13 +182,18 @@ namespace FluentSecurity
 			PolicyAppender = policyAppender;
 		}
 
-		public void ResolveServicesUsing(Func<Type, IEnumerable<object>> servicesLocator, Func<Type, object> singleServiceLocator = null)
+		public void ResolveServicesUsing(Func<Type, IEnumerable<object>> servicesLocator, Func<Type, object> singleServiceLocator)
 		{
 			if (servicesLocator == null)
 				throw new ArgumentNullException("servicesLocator");
 
 			ExternalServiceLocator = new ExternalServiceLocator(servicesLocator, singleServiceLocator);
 		}
+
+        public void ResolveServicesUsing(Func<Type, IEnumerable<object>> servicesLocator)
+        {
+            ResolveServicesUsing(servicesLocator, null);
+        }
 
 		public void ResolveServicesUsing(ISecurityServiceLocator securityServiceLocator)
 		{

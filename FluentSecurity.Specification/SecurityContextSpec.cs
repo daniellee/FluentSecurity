@@ -52,14 +52,11 @@ namespace FluentSecurity.Specification
 
 			var iocContext = TestDataFactory.CreateSecurityContext(status, roles);
 			FakeIoC.GetAllInstancesProvider = () => new List<ISecurityContext>
-			{
-			    iocContext
-			};
+			                                            {
+			                                                iocContext
+			                                            }.ConvertAll<object>( x => (object)x);
 
-			SecurityConfigurator.Configure(c =>
-			{
-				c.ResolveServicesUsing(FakeIoC.GetAllInstances);
-			});
+			SecurityConfigurator.Configure(c => c.ResolveServicesUsing(FakeIoC.GetAllInstances));
 
 			// Act
 			var context = SecurityContext.Current;

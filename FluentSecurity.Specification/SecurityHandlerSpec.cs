@@ -64,10 +64,10 @@ namespace FluentSecurity.Specification
 			// Arrange
 			var expectedActionResult = new ViewResult { ViewName = "SomeViewName" };
 			var violationHandler = new DenyAnonymousAccessPolicyViolationHandler(expectedActionResult);
-			FakeIoC.GetAllInstancesProvider = () => new List<IPolicyViolationHandler>
-			{
-			    violationHandler
-			};
+			FakeIoC.GetAllInstancesProvider = () =>  new List<IPolicyViolationHandler>
+			                                                          {
+			                                                              violationHandler
+			                                                          }.ConvertAll(x => (object)x);
 
 			SecurityConfigurator.Configure(policy =>
 			{

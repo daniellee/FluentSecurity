@@ -17,6 +17,11 @@ namespace FluentSecurity.ServiceLocation
 			_registeredObjects.Add(registeredObject);
 		}
 
+        public void Register<TTYpeToResolve>(Func<IContainer, object> instanceExpression)
+        {
+            Register<TTYpeToResolve>(instanceExpression, LifeCycle.Transient);
+        }
+
 		public TTypeToResolve Resolve<TTypeToResolve>()
 		{
 			return (TTypeToResolve)ResolveObject(typeof(TTypeToResolve));

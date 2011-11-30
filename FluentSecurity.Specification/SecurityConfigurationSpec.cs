@@ -95,7 +95,7 @@ namespace FluentSecurity.Specification
 		public void Should_return_the_current_configuration()
 		{
 			var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-			var fullFilePath = Path.Combine(baseDirectory, "TestData", "DiagnosticsOutputExample.txt");
+			var fullFilePath = Path.Combine(Path.Combine(baseDirectory, "TestData"), "DiagnosticsOutputExample.txt");
 			var expectedOutput = File.ReadAllText(fullFilePath);
 
 			var securityConfiguration = new SecurityConfiguration(configuration =>

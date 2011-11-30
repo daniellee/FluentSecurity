@@ -7,13 +7,18 @@ namespace FluentSecurity
 {
 	public static class ConventionPolicyContainerExtensions
 	{
-		public static IConventionPolicyContainer DelegatePolicy(this IConventionPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate = null)
+		public static IConventionPolicyContainer DelegatePolicy(this IConventionPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate)
 		{
 			policyContainer.AddPolicy(new DelegatePolicy(uniqueName, policyDelegate, violationHandlerDelegate));
 			return policyContainer;
 		}
 
-		public static IConventionPolicyContainer DelegatePolicy(this IConventionPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, bool> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate = null, string failureMessage = "Access denied")
+        public static IConventionPolicyContainer DelegatePolicy(this IConventionPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate)
+        {
+            return DelegatePolicy(policyContainer, uniqueName, policyDelegate, null);
+        }
+
+	    public static IConventionPolicyContainer DelegatePolicy(this IConventionPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, bool> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate, string failureMessage)
 		{
 			Func<DelegateSecurityContext, PolicyResult> booleanPolicyDelegate =
 				context => policyDelegate.Invoke(context)
@@ -24,7 +29,12 @@ namespace FluentSecurity
 			return policyContainer;
 		}
 
-		public static IConventionPolicyContainer DenyAnonymousAccess(this IConventionPolicyContainer conventionPolicyContainer)
+        public static IConventionPolicyContainer DelegatePolicy(this IConventionPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, bool> policyDelegate)
+        {
+            return DelegatePolicy(policyContainer, uniqueName, policyDelegate, null, "Access denied");
+        }
+
+	    public static IConventionPolicyContainer DenyAnonymousAccess(this IConventionPolicyContainer conventionPolicyContainer)
 		{
 			conventionPolicyContainer.AddPolicy(new DenyAnonymousAccessPolicy());
 			return conventionPolicyContainer;

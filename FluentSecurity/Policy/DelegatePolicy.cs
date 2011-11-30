@@ -11,9 +11,9 @@ namespace FluentSecurity.Policy
 		public Func<DelegateSecurityContext, PolicyResult> Policy { get; private set; }
 		public Func<PolicyViolationException, ActionResult> ViolationHandler { get; private set; }
 
-		public DelegatePolicy(string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate = null)
+		public DelegatePolicy(string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate)
 		{
-			if (String.IsNullOrWhiteSpace(uniqueName))
+            if (String.IsNullOrEmpty(uniqueName) || String.IsNullOrEmpty(uniqueName.Trim()))
 				throw new ArgumentException("uniqueName");
 
 			if (policyDelegate == null)
@@ -23,6 +23,10 @@ namespace FluentSecurity.Policy
 			Policy = policyDelegate;
 			ViolationHandler = violationHandlerDelegate;
 		}
+
+        public DelegatePolicy(string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate): this(uniqueName, policyDelegate, null)
+        {
+        }
 
 		public PolicyResult Enforce(ISecurityContext context)
 		{

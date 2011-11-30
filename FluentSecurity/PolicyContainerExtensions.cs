@@ -7,13 +7,18 @@ namespace FluentSecurity
 {
 	public static class PolicyContainerExtensions
 	{
-		public static IPolicyContainer DelegatePolicy(this IPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate = null)
+		public static IPolicyContainer DelegatePolicy(this IPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate)
 		{
 			policyContainer.AddPolicy(new DelegatePolicy(uniqueName, policyDelegate, violationHandlerDelegate));
 			return policyContainer;
 		}
 
-		public static IPolicyContainer DelegatePolicy(this IPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, bool> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate = null, string failureMessage = "Access denied")
+        public static IPolicyContainer DelegatePolicy(this IPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, PolicyResult> policyDelegate)
+        {
+            return DelegatePolicy(policyContainer, uniqueName, policyDelegate, null);
+        }
+
+		public static IPolicyContainer DelegatePolicy(this IPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, bool> policyDelegate, Func<PolicyViolationException, ActionResult> violationHandlerDelegate, string failureMessage)
 		{
 			Func<DelegateSecurityContext, PolicyResult> booleanPolicyDelegate =
 				context => policyDelegate.Invoke(context)
@@ -24,7 +29,12 @@ namespace FluentSecurity
 			return policyContainer;
 		}
 
-		public static IPolicyContainer DenyAnonymousAccess(this IPolicyContainer policyContainer)
+        public static IPolicyContainer DelegatePolicy(this IPolicyContainer policyContainer, string uniqueName, Func<DelegateSecurityContext, bool> policyDelegate)
+        {
+            return DelegatePolicy(policyContainer, uniqueName, policyDelegate, null, "Access denied");
+        }
+
+	    public static IPolicyContainer DenyAnonymousAccess(this IPolicyContainer policyContainer)
 		{
 			policyContainer.AddPolicy(new DenyAnonymousAccessPolicy());
 			return policyContainer;

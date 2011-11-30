@@ -9,14 +9,18 @@ namespace FluentSecurity.ServiceLocation
 		private readonly Func<Type, IEnumerable<object>> _servicesSource;
 		private readonly Func<Type, object> _singleServiceSource;
 
-		public ExternalServiceLocator(Func<Type, IEnumerable<object>> servicesSource, Func<Type, object> singleServiceSource = null)
+		public ExternalServiceLocator(Func<Type, IEnumerable<object>> servicesSource, Func<Type, object> singleServiceSource)
 		{
 			if (servicesSource == null) throw new ArgumentNullException("servicesSource");			
 			_servicesSource = servicesSource;
 			_singleServiceSource = singleServiceSource;
 		}
 
-		public object Resolve(Type typeToResolve)
+        public ExternalServiceLocator(Func<Type, IEnumerable<object>> servicesSource): this(servicesSource, null)
+        {
+        }
+
+	    public object Resolve(Type typeToResolve)
 		{
 			if (_singleServiceSource != null)
 				return _singleServiceSource.Invoke(typeToResolve);
