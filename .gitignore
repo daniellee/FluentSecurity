@@ -1,9 +1,19 @@
 /Build/Artifacts/
 /Build/FluentSecurity.TestHelper.nuspec
 /Build/FluentSecurity.nuspec
+/Build/Output/
+/Build/Reports/
 
 CommonAssemblyInfo.cs
 
 /Build/CodeCoverage/
 NCover3.lic
 FluentSecurity.1.1.dotCover
+
+obj
+bin
+*resharper*
+*.user
+*.suo
+*.sln.cache
+lint.db
