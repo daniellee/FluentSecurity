@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using FluentFilters;
 
 namespace FluentSecurity.SampleApplication
 {
@@ -22,7 +23,7 @@ namespace FluentSecurity.SampleApplication
 			Bootstrapper.SetupFluentSecurity();
 			AreaRegistration.RegisterAllAreas();
 			RegisterRoutes(RouteTable.Routes);
-			RegisterGlobalFilters(GlobalFilters.Filters);
+			RegisterFluentFilters();
 		}
 
 		public static void SetupContainer()
@@ -40,9 +41,9 @@ namespace FluentSecurity.SampleApplication
 			new RouteRegistrar(routes).RegisterRoutes();
 		}
 
-		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+		public static void RegisterFluentFilters()
 		{
-			filters.Add(new HandleSecurityAttribute());
+            FluentFiltersBuilder.Current.Add<HandleSecurityAttribute>();
 		}
 	}
 }
