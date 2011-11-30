@@ -80,7 +80,7 @@
 	<!-- INTERNAL PROPERTIES
 		These properties should not be modified unless you really know what you are doing.
 	-->
-	<property name="nant.settings.currentframework" value="net-4.0"/>
+	<property name="nant.settings.currentframework" value="net-3.5"/>
 	<property name="msbuild.exe" value="${framework::get-framework-directory(framework::get-target-framework())}\msbuild.exe" />
 	<property name="msbuild.verbosity" value="Quiet"/>
 	<property name="msbuild.verbosity" value="Normal" if="${verbose}" />
@@ -145,6 +145,7 @@
 					<arg value="${project}" />
 					<arg value="/nologo" unless="${verbose}" />
 					<arg value="/p:Configuration=Release" />
+					<arg value="/p:TargetFrameworkVersion=v3.5" />
 					<arg value="/v:${msbuild.verbosity}" />
 				</exec>
 				
