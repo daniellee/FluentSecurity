@@ -132,7 +132,7 @@ namespace FluentSecurity.TestHelper.Specification
 			// Assert
 			Assert.That(expectationResults.Count(), Is.EqualTo(1));
 			Assert.That(expectationResults.First().ExpectationsMet, Is.False);
-			Assert.That(expectationResults.First().Message, Is.EqualTo("Expected policy of type \"FluentSecurity.Policy.DelegatePolicy\" for controller \"FluentSecurity.TestHelper.Specification.TestData.AdminController\", action \"Login\".\r\n\t\tPredicate: p => (p.Name == \"LoginPolicy\")"));
+			Assert.That(expectationResults.First().Message, Is.EqualTo("Expected policy of type \"FluentSecurity.Policy.DelegatePolicy\" for controller \"FluentSecurity.TestHelper.Specification.TestData.AdminController\", action \"Login\".\r\n\t\tPredicate: p => (p.Name = \"LoginPolicy\")"));
 		}
 	}
 }

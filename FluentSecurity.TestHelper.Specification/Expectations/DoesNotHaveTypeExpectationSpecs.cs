@@ -19,7 +19,7 @@ namespace FluentSecurity.TestHelper.Specification.Expectations
 			Assert.That(expectation.PredicateExpression, Is.Not.Null);
 			Assert.That(expectation.Predicate, Is.Not.Null);
 			Assert.That(expectation.GetPredicateDescription(), Is.EqualTo(
-				"securityPolicy => (securityPolicy.GetType() == value(FluentSecurity.TestHelper.Expectations.DoesNotHaveTypeExpectation`1[FluentSecurity.TestHelper.Specification.TestData.DenyInternetExplorerPolicy]).Type)"
+				"securityPolicy => (securityPolicy.GetType() = value(FluentSecurity.TestHelper.Expectations.DoesNotHaveTypeExpectation`1[FluentSecurity.TestHelper.Specification.TestData.DenyInternetExplorerPolicy]).Type)"
 				));
 		}
 
